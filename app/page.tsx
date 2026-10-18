@@ -821,7 +821,10 @@ const notBuilt: ReactNode[] = [
     <Strong>Admin › Usage with Connect.</Strong> It needs service-account mode, and usage across everyone who has
     connected isn&apos;t available to the app. Personal usage works in both.
   </>,
-  <>Editing or branching messages, searching message text, and access by identity-provider group.</>,
+  <>
+    Editing or branching messages, steering a reply in progress (a message sent meanwhile waits for the reply to end),
+    searching message text, and access by identity-provider group.
+  </>,
 ];
 
 function OpenSource() {
