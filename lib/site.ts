@@ -43,6 +43,8 @@ export const site = {
   licenseUrl: `${pinned}/LICENSE`,
   featuresUrl: `${pinned}/server/features.ts`,
   issuesUrl: `${repoUrl}/issues`,
+  // The plan changes between releases, so this points at main, not at the tag.
+  roadmapUrl: `${repoUrl}/blob/main/ROADMAP.md`,
   securityUrl: `${repoUrl}/security`,
   platformUrl: "https://github.com/ncecere/pi-durable-platform",
   ociUrl: "https://github.com/ncecere/open-chat-interface",

@@ -816,15 +816,18 @@ function Deploy() {
 // CHANGELOG 0.1.0 "Known limitations" (nothing in 0.2.0 or 0.3.0 changes these).
 const notBuilt: ReactNode[] = [
   <>
-    <Strong>File and image uploads.</Strong>
+    <Strong>Files and images in a message, steering a reply in progress, approving tool calls, and editing or
+    branching messages.</Strong> Each needs the platform to offer something first; a message sent while an agent is
+    working waits for the reply to end.
   </>,
   <>
     <Strong>Admin › Usage with Connect.</Strong> It needs service-account mode, and usage across everyone who has
     connected isn&apos;t available to the app. Personal usage works in both.
   </>,
   <>
-    Editing or branching messages, steering a reply in progress (a message sent meanwhile waits for the reply to end),
-    searching message text, and access by identity-provider group.
+    Access and the administrator role by identity-provider group (today the sign-in provider limits who comes in),
+    rotating the session secret without people reconnecting, metrics, paging and searching long conversation lists,
+    searching message text, and browser tests and an accessibility audit.
   </>,
 ];
 
@@ -916,7 +919,8 @@ function OpenSource() {
               </div>
             </dl>
             <p className="mt-6 text-brand-muted">
-              Read the <TextLink href={site.changelogUrl}>changelog</TextLink>, and report problems in the{" "}
+              Read the <TextLink href={site.changelogUrl}>changelog</TextLink> and the{" "}
+              <TextLink href={site.roadmapUrl}>roadmap</TextLink>, and report problems in the{" "}
               <TextLink href={site.issuesUrl}>issue tracker</TextLink>.
             </p>
           </article>
