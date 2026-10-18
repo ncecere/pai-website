@@ -18,8 +18,8 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.2.0
- * (github.com/ncecere/pi-agent-interface, tag v0.2.0, commit 4815fa6,
+ * Every claim here is checked against Pi Agent Interface v0.2.0 and still holds for v0.2.1,
+ * which only fixes defects (github.com/ncecere/pi-agent-interface, tag v0.2.1, commit e1fbeac,
  * 2026-10-18): README.md, CHANGELOG.md ("0.2.0"), NOTICE.md,
  * deploy/kubernetes/README.md, server/connect.ts, server/connect-agents.ts,
  * server/features.ts, the routes in server/app.ts, server/config.ts,
