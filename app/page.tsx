@@ -18,9 +18,9 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.2.0 and still holds for v0.2.1,
- * which only fixes defects (github.com/ncecere/pi-agent-interface, tag v0.2.1, commit e1fbeac,
- * 2026-10-18): README.md, CHANGELOG.md ("0.2.0"), NOTICE.md,
+ * Every claim here is checked against Pi Agent Interface v0.3.0
+ * (github.com/ncecere/pi-agent-interface, tag v0.3.0, commit b78e988,
+ * 2026-10-18): README.md, CHANGELOG.md ("0.2.0", "0.3.0"), NOTICE.md,
  * deploy/kubernetes/README.md, server/connect.ts, server/connect-agents.ts,
  * server/features.ts, the routes in server/app.ts, server/config.ts,
  * server/session.ts, server/agent-settings.ts, the screens in src/routes/**
@@ -380,7 +380,7 @@ function Features() {
             }
           />
 
-          {/* CHANGELOG 0.2.0 "Chat" and 0.1.0 "Chat": tool steps, readable errors, "No reply", rename */}
+          {/* CHANGELOG 0.3.0 (time, model, tokens, step durations, length limit), 0.2.0 "Chat" and 0.1.0 "Chat": tool steps, readable errors, "No reply", rename */}
           <FeatureCard
             id="feature-chat"
             icon={<MessageSquare className="size-5" />}
@@ -415,6 +415,11 @@ function Features() {
               </>,
               <>
                 <Strong>Rename</Strong> a conversation from its menu; the new name shows at once, on every device.
+              </>,
+              <>
+                <Strong>When, which model, how long:</Strong> hover a message to see when it was sent. Under a
+                finished reply: the model and the tokens it used. Each tool step shows how long it ran, and a reply cut
+                off at the model&apos;s length limit says so. All of it is shown when the platform records it.
               </>,
             ]}
           />
@@ -488,7 +493,8 @@ function Features() {
               </>,
               <>
                 <Strong>One picker</Strong> for a new conversation: Provided, Yours, then each team&apos;s agents. A
-                conversation with a team&apos;s agent starts private to you.
+                conversation with a team&apos;s agent starts private to you, which works with a platform that has private
+                and shared threads.
               </>,
               <>
                 <Strong>Within limits:</Strong> five agents of their own per person by default (0 turns making agents
@@ -739,7 +745,8 @@ function Deploy() {
           <p>
             {site.name} is one Node process that serves the web app and its API, in a signed container image that runs
             as a non-root user. Its configuration is a handful of environment variables, and it migrates its own
-            database on start.
+            database on start, waiting up to three minutes for the database to answer.
+            
           </p>
         </SectionHeading>
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
@@ -805,15 +812,8 @@ function Deploy() {
 /* ------------------------------------------------------ Open source */
 
 // CHANGELOG 0.2.0 ("Connecting to the platform", "Usage"), server/app.ts (the usage lock in Connect mode),
-// CHANGELOG 0.1.0 "Known limitations" (nothing in 0.2.0 changes these).
+// CHANGELOG 0.1.0 "Known limitations" (nothing in 0.2.0 or 0.3.0 changes these).
 const notBuilt: ReactNode[] = [
-  <>
-    <Strong>Shared and private threads with team agents.</Strong> A conversation with a team&apos;s agent starts
-    private to you; choosing between shared and private depends on a platform release.
-  </>,
-  <>
-    <Strong>Model, tokens and timing under replies</Strong> arrive with a platform release.
-  </>,
   <>
     <Strong>File and image uploads.</Strong>
   </>,
@@ -884,7 +884,7 @@ function OpenSource() {
                   People connect their own platform account, and their agents live in their personal workspace beside
                   their teams&apos;. Also in it: provided agents and your own with Admin › Agents, the inbox
                   driven live by the platform&apos;s event stream and synced between devices, with shortcuts, tool steps
-                  and readable errors, the admin area and settings, the optional usage features, the Face logo, and a
+                  and readable errors, when, which model and how many tokens under each reply when the platform records them, the admin area and settings, the optional usage features, the Face logo, and a
                   signed image with a Kubernetes base.
                 </dd>
               </div>
