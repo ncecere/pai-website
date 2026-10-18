@@ -18,15 +18,17 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface at the head of main
- * (github.com/ncecere/pi-agent-interface, commit 3ae3d9e, 2026-10-18):
- * README.md, CHANGELOG.md ("Unreleased" and "0.1.0"), NOTICE.md,
+ * Every claim here is checked against Pi Agent Interface v0.2.0
+ * (github.com/ncecere/pi-agent-interface, tag v0.2.0, commit 4815fa6,
+ * 2026-10-18): README.md, CHANGELOG.md ("0.2.0"), NOTICE.md,
+ * deploy/kubernetes/README.md, server/connect.ts, server/connect-agents.ts,
  * server/features.ts, the routes in server/app.ts, server/config.ts,
- * server/session.ts, server/main.ts, server/agent-settings.ts, the screens in
- * src/routes/**, the Dockerfile and .github/workflows/image.yml.
+ * server/session.ts, server/agent-settings.ts, the screens in src/routes/**
+ * and src/components/connect/, the Dockerfile and
+ * .github/workflows/image.yml.
  * Keep it that way: nothing on this page may describe a feature that isn't
- * built at HEAD. The release being built now (OAuth Connect and personal
- * workspaces) is named as next, in the project status card only.
+ * built in the released version. What isn't built yet is said in the project
+ * status card.
  */
 
 const appUrl = `https://${site.exampleHost}`;
@@ -66,9 +68,9 @@ function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-brand-muted">
             Pi Agent Interface ({site.shortName}) is a self-hosted chat app for{" "}
-            <TextLink href={site.platformUrl}>Pi Durable</TextLink> agents. People sign in with your single sign-on,
-            each gets their own agents on the platform, and one inbox shows which of them are working, which are done
-            and which failed.
+            <TextLink href={site.platformUrl}>Pi Durable</TextLink> agents. People sign in with your single sign-on and
+            connect their own platform account once. Their agents live in their personal workspace beside their
+            teams&apos; agents, and one inbox shows which of them are working, which are done and which failed.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href={site.docsUrl}>
@@ -96,8 +98,8 @@ function Hero() {
 const pillars: { icon: ReactNode; title: string; body: string }[] = [
   {
     icon: <Shield className="size-5" />,
-    title: "Sign in to the chat app, not the platform",
-    body: "People sign in with OpenID Connect and never get platform credentials. The chat server talks to the platform with one team service account, and checks on every request that the agent is the signed-in person's own.",
+    title: "Sign in here, connect once",
+    body: "People sign in to the chat app with OpenID Connect, then connect their own account on the agent platform, once. The server keeps their tokens encrypted and calls the platform as them; the browser never sees a token.",
   },
   {
     icon: <Bot className="size-5" />,
@@ -118,8 +120,8 @@ function WhatItIs() {
         <SectionHeading id="what-title" eyebrow="What it is" title="A chat app in front of your agent platform">
           <p>
             Pi Durable runs agents that keep their own conversations, tools and state. {site.name} gives the people in
-            your organization a place to use them: their own agents, a familiar chat interface, and an inbox to keep
-            track of work that takes minutes rather than seconds.
+            your organization a place to use them: their own agents next to their teams&apos;, a familiar chat
+            interface, and an inbox to keep track of work that takes minutes rather than seconds.
           </p>
         </SectionHeading>
         <ul className="mt-12 grid gap-4 md:grid-cols-3">
@@ -159,13 +161,14 @@ function FlowArrow() {
   );
 }
 
-// README "How it works" and server/app.ts: what the chat server does for each person.
+// README "How it works", server/connect.ts, server/connect-agents.ts and server/app.ts:
+// what the chat server does for each person in Connect mode (the default).
 const serverSteps: { title: string; body: string }[] = [
   { title: "Sign in", body: "Single sign-on with your OpenID Connect provider; the session is an encrypted cookie." },
-  { title: "Make the agents", body: "The person's provided agents, the first time they open the app, from the templates and models you chose." },
-  { title: "Check", body: "Every agent request is for one of the signed-in person's own agents, or it is refused." },
-  { title: "Relay", body: "Conversations, messages, Stop and the live stream of each reply, to the platform with the team's service key." },
-  { title: "Follow", body: "One connection to the platform's event stream, each event passed only to the person whose agent it is." },
+  { title: "Connect", body: "Once, the person connects their own platform account. The server keeps the tokens encrypted and refreshes them; the browser never sees them." },
+  { title: "Make the agents", body: "The person's provided agents, in their personal workspace, the first time they open the app: one private copy each, from the templates and models you chose." },
+  { title: "Relay", body: "Conversations, messages, Stop and the live stream of each reply, to the platform with the person's own token. The platform decides what they may use." },
+  { title: "Follow", body: "The platform's event stream, one per person with their own token, so the inbox updates on every device." },
 ];
 
 function HowItWorks() {
@@ -174,8 +177,8 @@ function HowItWorks() {
       <div className="container-page">
         <SectionHeading id="how-title" eyebrow="How it works" title="People in front, the platform behind, one small server in between">
           <p>
-            The chat app has its own server. It signs people in, makes and finds their agents on the platform, and
-            relays only their own agents&apos; routes. The platform key never reaches a browser.
+            The chat app has its own server. It signs people in, connects each person to the platform, finds and makes
+            their agents there, and calls the platform as them. Tokens and keys stay on the server.
           </p>
         </SectionHeading>
 
@@ -186,7 +189,8 @@ function HowItWorks() {
               <ul className="mt-4 space-y-2">
                 <Chip>A browser, on any device</Chip>
                 <Chip>Signed in with your SSO</Chip>
-                <Chip>Their own agents and inbox</Chip>
+                <Chip>Connected to their own platform account</Chip>
+                <Chip>Their agents and inbox</Chip>
               </ul>
               <p className="mt-4 text-xs text-brand-subtle">
                 at <code className="font-mono">{appUrl}</code>
@@ -210,7 +214,8 @@ function HowItWorks() {
                 ))}
               </ol>
               <p className="mt-4 border-t border-brand-border pt-3 text-xs text-brand-subtle">
-                Its own PostgreSQL: people, roles, settings, preferences, inbox state and the audit log
+                Its own PostgreSQL: people, roles, settings, preferences, inbox state, the audit log and the encrypted
+                connection tokens
               </p>
             </div>
 
@@ -219,8 +224,8 @@ function HowItWorks() {
             <div className="rounded-card border border-brand-border bg-brand-surface p-5">
               <p className="text-sm font-semibold text-brand-subtle">Pi Durable platform</p>
               <ul className="mt-4 space-y-2">
-                <Chip>A team for the chat app</Chip>
-                <Chip>Each person&apos;s agents</Chip>
+                <Chip>Each person&apos;s personal workspace</Chip>
+                <Chip>Their teams&apos; agents</Chip>
                 <Chip>Conversations and tool runs</Chip>
                 <Chip>Models and templates</Chip>
                 <Chip>Usage reports</Chip>
@@ -231,10 +236,28 @@ function HowItWorks() {
             </div>
           </div>
           <figcaption className="mt-4 text-sm text-brand-muted">
-            Conversations stay on the platform; the chat app keeps no copy. The team&apos;s owners see every
-            person&apos;s agents in the platform console, but not their conversations.
+            Conversations stay on the platform; the chat app keeps no copy. The diagram shows Connect, the default.
           </figcaption>
         </figure>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="rounded-card border border-brand-border bg-brand-surface p-6">
+            <h3 className="text-base font-semibold text-brand-text">Connect (the default)</h3>
+            <p className="mt-2 text-sm leading-relaxed text-brand-muted">
+              Each person connects their own platform account. It needs a platform with OAuth Connect and personal
+              workspaces turned on. The server calls the platform with the person&apos;s token, and the platform decides
+              what they may use.
+            </p>
+          </div>
+          <div className="rounded-card border border-brand-border bg-brand-surface p-6">
+            <h3 className="text-base font-semibold text-brand-text">Service account</h3>
+            <p className="mt-2 text-sm leading-relaxed text-brand-muted">
+              For a platform without Connect (<code>PLATFORM_AUTH=service</code>, and the mode when a service key is
+              set). One team service account holds an agent for each person, and the server checks on every request
+              that the agent is the signed-in person&apos;s own. The key never reaches a browser.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -299,14 +322,65 @@ function Features() {
       <div className="container-page">
         <SectionHeading id="features-title" eyebrow="Features" title="Chat with your agents, and keep track of what they are doing">
           <p>
-            Everyone who signs in gets the same agents to start with, can make their own, and sees their work in one
-            inbox. Administrators decide which agents people have, what they run on and which optional parts of the
-            app are on.
+            Everyone who signs in connects their own platform account once, gets the same provided agents to start
+            with, can make their own, and sees their work in one inbox. Administrators decide which agents people
+            have, what they run on and which optional parts of the app are on.
           </p>
         </SectionHeading>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {/* CHANGELOG 0.1.0 "Chat"; Unreleased: tool steps, readable errors, "No reply", folding, rename */}
+          {/* CHANGELOG 0.2.0 "Connecting to the platform"; server/connect.ts, server/connect-agents.ts, README "What you need" */}
+          <FeatureCard
+            id="feature-connect"
+            icon={<Plug className="size-5" />}
+            eyebrow="Connect"
+            title="Your own platform account, your own workspace"
+            wide
+            lead={
+              <p>
+                After signing in, each person connects their own account on the agent platform, once. Their agents live in
+                their personal workspace there, beside the agents of the teams they belong to, and the server calls the
+                platform with their token. The platform decides what they may use.
+              </p>
+            }
+            bullets={[
+              <>
+                <Strong>Connect once:</Strong> a &ldquo;Connect your agents&rdquo; screen sends the person to the platform to
+                sign in and allow the app, then brings them back. Until they have, it is all they see.
+              </>,
+              <>
+                <Strong>Personal workspace and teams:</Strong> the agent picker lists the provided agents, the person&apos;s
+                own, and each team&apos;s agents.
+              </>,
+              <>
+                <Strong>Tokens stay on the server:</Strong> they are encrypted in the app&apos;s database with a key derived
+                from <code>SESSION_SECRET</code>, refreshed one at a time per person, and never sent to a browser.
+              </>,
+              <>
+                <Strong>Asked again when it ends:</Strong> if the person disconnects the app on the platform, or an
+                administrator of the platform revokes it, the next request asks them to connect again.
+              </>,
+              <>
+                <Strong>The same person on both sides:</Strong> a platform account whose email differs from the person&apos;s
+                account here is refused and its tokens revoked, unless <code>CONNECT_EMAIL_MATCH=off</code>.
+              </>,
+              <>
+                <Strong>Disconnect any time</Strong> under Settings › Account, or in the platform&apos;s Connected apps.
+                Agents and conversations stay on the platform.
+              </>,
+            ]}
+            note={
+              <>
+                Connect needs a platform with OAuth Connect and personal workspaces turned on. The app identifies itself
+                with a Client ID Metadata Document at <code>{appUrl}/oauth/client-metadata.json</code>, which the platform
+                fetches, so that address must be reachable from the platform and must not redirect. On a local{" "}
+                <code>http://localhost</code> address the app registers itself instead. For a platform without Connect,
+                service-account mode remains: one team service account, <code>PLATFORM_AUTH=service</code>.
+              </>
+            }
+          />
+
+          {/* CHANGELOG 0.2.0 "Chat" and 0.1.0 "Chat": tool steps, readable errors, "No reply", rename */}
           <FeatureCard
             id="feature-chat"
             icon={<MessageSquare className="size-5" />}
@@ -345,7 +419,7 @@ function Features() {
             ]}
           />
 
-          {/* src/lib/inbox.ts, src/components/layout/sidebar-inbox.tsx; CHANGELOG Unreleased */}
+          {/* src/lib/inbox.ts, src/components/layout/sidebar-inbox.tsx; CHANGELOG 0.2.0 "Inbox" */}
           <FeatureCard
             id="feature-inbox"
             icon={<Inbox className="size-5" />}
@@ -388,7 +462,7 @@ function Features() {
             ]}
           />
 
-          {/* server/agent-settings.ts; /api/agents in server/app.ts; src/routes/settings/agents.tsx; avatars */}
+          {/* server/agent-settings.ts, server/connect-agents.ts; /api/agents in server/app.ts; src/routes/settings/agents.tsx; avatars */}
           <FeatureCard
             id="feature-agents"
             icon={<Bot className="size-5" />}
@@ -397,21 +471,24 @@ function Features() {
             wide
             lead={
               <p>
-                Every person has their own agents on the platform, with private conversations. Some are provided by your
-                administrators; the rest people make themselves, within the limits you set.
+                Agents live on the platform, in each person&apos;s personal workspace beside the agents of their teams.
+                Some are provided by your administrators; the rest people make themselves, within the limits you set.
               </p>
             }
             bullets={[
               <>
-                <Strong>Provided agents:</Strong> administrators add agents everyone gets, and every person gets a
-                private copy of each, made the first time they open the app. The built-in assistant is the first.
+                <Strong>Provided agents:</Strong> administrators add agents everyone gets. Every person gets a private
+                copy of each, made once in their workspace the first time they open the app (a copy already there under
+                that name is adopted, not duplicated). The built-in assistant is the first.
               </>,
               <>
                 <Strong>My agents</Strong> (Settings): make agents from the templates your administrators allow, rename
-                them, move them to another model, or delete them with their conversations.
+                them, move them to another model, or delete them with their conversations. Agents made in the
+                platform&apos;s own console, in the personal workspace, show up as yours.
               </>,
               <>
-                <Strong>One picker</Strong> for a new conversation, with the provided agents grouped above your own.
+                <Strong>One picker</Strong> for a new conversation: Provided, Yours, then each team&apos;s agents. A
+                conversation with a team&apos;s agent starts private to you.
               </>,
               <>
                 <Strong>Within limits:</Strong> five agents of their own per person by default (0 turns making agents
@@ -422,8 +499,9 @@ function Features() {
                 doing: idle, thinking, working, waiting, needs you, done, error or asleep.
               </>,
               <>
-                <Strong>Only published models:</Strong> agents are only ever put on a model the platform currently
-                publishes to the team, so none is left on a model that would not start.
+                <Strong>Only offered models:</Strong> agents are only put on a model the platform currently offers the
+                person&apos;s workspace (in service-account mode, the team), so none is left on a model that would not
+                start.
               </>,
             ]}
           />
@@ -458,7 +536,8 @@ function Features() {
                 including the sign-in page.
               </>,
               <>
-                <Strong>Features</Strong> and the <Strong>Audit log</Strong>.
+                <Strong>Features</Strong>, <Strong>Usage</Strong> (service-account mode) and the{" "}
+                <Strong>Audit log</Strong>.
               </>,
             ]}
             note={
@@ -484,8 +563,9 @@ function Features() {
             }
             bullets={[
               <>
-                <Strong>Usage</Strong> (on by default): Admin › Usage shows requests, tokens and an estimated cost per
-                person over 7, 30 or 90 days, with tokens per day, from the platform&apos;s usage report.
+                <Strong>Usage</Strong> (on by default, service-account mode only): Admin › Usage shows requests, tokens
+                and an estimated cost per person over 7, 30 or 90 days, with tokens per day, from the platform&apos;s
+                usage report.
               </>,
               <>
                 <Strong>Personal usage</Strong> (off by default): Settings › Usage shows each person their own
@@ -494,8 +574,9 @@ function Features() {
             ]}
             note={
               <>
-                Costs appear once the platform has prices for the models. A deployment whose platform can&apos;t support
-                a feature turns it off for good with <code>DISABLED_FEATURES</code>.
+                Costs appear once the platform has prices for the models. With Connect, people&apos;s agents are in their
+                own workspaces, which the app&apos;s administrators don&apos;t see, so Usage is locked off; Personal usage
+                still works. A deployment can turn a feature off for good with <code>DISABLED_FEATURES</code>.
               </>
             }
           />
@@ -523,8 +604,9 @@ function Features() {
                 app&apos;s own origin.
               </>,
               <>
-                <Strong>Ownership on every request:</Strong> an agent that isn&apos;t yours answers 404. The service key
-                is never sent to browsers.
+                <Strong>Nothing secret in the browser:</Strong> Connect tokens and the service key stay on the server. In
+                service-account mode an agent that isn&apos;t yours answers 404; with Connect the platform checks every
+                request against the person&apos;s own token.
               </>,
               <>
                 <Strong>Strict headers:</Strong> a Content-Security-Policy that allows scripts only from the app itself,
@@ -537,9 +619,9 @@ function Features() {
                 secret.
               </>,
               <>
-                <Strong>A non-root container:</Strong> the image runs as the <code>node</code> user with a health check.
-                Release images are multi-arch, scanned for vulnerabilities, carry an SBOM and provenance, and are signed
-                with cosign.
+                <Strong>A non-root container:</Strong> the image runs as the <code>node</code> user with a health check,
+                and has no npm, corepack or yarn in it. Release images are multi-arch, scanned for vulnerabilities, carry
+                an SBOM and provenance, and are signed with cosign.
               </>,
             ]}
           />
@@ -553,6 +635,7 @@ function Features() {
 
 const galleries: { title: string; slots: SlotName[] }[] = [
   { title: "Chat and inbox", slots: ["tool-steps", "inbox-rows", "inbox-snooze", "phone-inbox"] },
+  { title: "Connect", slots: ["connect", "account-connection"] },
   { title: "Agents", slots: ["agent-picker", "my-agents", "avatar-styles", "admin-agents"] },
   { title: "Administration", slots: ["admin-people", "admin-features", "admin-usage", "admin-audit"] },
 ];
@@ -584,19 +667,28 @@ function Screenshots() {
 
 /* ------------------------------------------------------------- Deploy */
 
-// README "Running it".
-const dockerRun = `git clone https://github.com/ncecere/pi-agent-interface.git
-cd pi-agent-interface
-docker build -t pi-agent-interface .
-docker run -d -p 8080:8080 --env-file .env pi-agent-interface`;
+// README "Running it": the signed image, pinned by tag and digest.
+const dockerRun = `docker run -d -p 8080:8080 --env-file .env \\
+  ${site.image}:${site.imageTag}@${site.imageDigest}`;
 
-// README "Configuration" and .env.example: the variables every deployment sets.
+// The image workflow signs the multi-arch index with cosign keyless signing.
+const cosignVerify = `cosign verify ${site.image}@${site.imageDigest} \\
+  --certificate-identity ${site.cosignIdentity} \\
+  --certificate-oidc-issuer ${site.cosignIssuer}`;
+
+const buildFromSource = `git clone --branch ${site.version} https://github.com/ncecere/pi-agent-interface.git
+cd pi-agent-interface
+docker build -t pi-agent-interface .`;
+
+// README "Configuration", .env.example and deploy/kubernetes/README.md: the variables every deployment sets.
 const envEssentials = `APP_URL=${appUrl}
 
-# The platform, the app's team, its service account key (editor)
+# The platform, and how people reach their agents on it:
+#   connect  each person connects their own platform account (the default)
+#   service  one team service account; also set PLATFORM_TEAM and
+#            PLATFORM_SERVICE_KEY=pdp_sa_...
 PLATFORM_URL=https://${site.examplePlatformHost}
-PLATFORM_TEAM=pi-agent-interface
-PLATFORM_SERVICE_KEY=pdp_sa_...
+PLATFORM_AUTH=connect
 
 # The app's own PostgreSQL; migrated on start
 DATABASE_URL=postgres://pai:<password>@db.example.com:5432/pai
@@ -612,36 +704,26 @@ OIDC_CLIENT_SECRET=...
 # Becomes an administrator on first sign-in, while there is none
 INITIAL_ADMIN_EMAIL=alex.morgan@example.com`;
 
-// The image's runtime contract (Dockerfile): port 8080, user node (uid 1000),
-// /healthz and /readyz (server/app.ts). The repository has no manifests.
-const k8sContainer = `containers:
-  - name: pi-agent-interface
-    image: ${site.image}@sha256:<digest>
-    ports:
-      - containerPort: 8080
-    envFrom:
-      - secretRef:
-          name: pi-agent-interface   # the variables above
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1000                # the image's node user
-      allowPrivilegeEscalation: false
-    livenessProbe:
-      httpGet: { path: /healthz, port: 8080 }
-    readinessProbe:
-      httpGet: { path: /readyz, port: 8080 }   # the database answers`;
+// deploy/kubernetes/README.md: what an overlay of the Kustomize base adds (its image pin).
+const k8sImagePin = `images:
+  - name: ${site.image}
+    newTag: ${site.imageTag}
+    digest: ${site.imageDigest}`;
 
 const requirements: ReactNode[] = [
   <>
-    A <Strong>Pi Durable platform</Strong> with a team for the chat app, an <Strong>editor</Strong> service account
-    and its key (<code>pdp_sa_…</code>), and a model published to the team
+    A <Strong>Pi Durable platform</Strong>. For Connect, the default: OAuth Connect and personal workspaces turned
+    on, and the platform able to reach <code>{appUrl}/oauth/client-metadata.json</code>. Without Connect: a team for
+    the chat app, an <Strong>editor</Strong> service account and its key (<code>pdp_sa_…</code>), and a model
+    published to the team
   </>,
   <>
     An <Strong>OpenID Connect provider</Strong>, reached over https: a confidential client with the redirect URI{" "}
     <code>{appUrl}/auth/callback</code> and the <code>openid profile email</code> scopes
   </>,
   <>
-    <Strong>PostgreSQL</Strong> for the app&apos;s own data: people, roles, settings, preferences and the audit log
+    <Strong>PostgreSQL</Strong> for the app&apos;s own data: people, roles, settings, preferences, the audit log and
+    the encrypted connection tokens
   </>,
   <>
     <Strong>TLS in front</Strong>, with a reverse proxy that passes <code>Host</code> and <code>X-Forwarded-*</code>{" "}
@@ -655,16 +737,18 @@ function Deploy() {
       <div className="container-page">
         <SectionHeading id="deploy-title" eyebrow="Deploy" title="Run it next to your platform">
           <p>
-            {site.name} is one Node process that serves the web app and its API, in a container that runs as a
-            non-root user. Its configuration is a handful of environment variables, and it migrates its own database
-            on start.
+            {site.name} is one Node process that serves the web app and its API, in a signed container image that runs
+            as a non-root user. Its configuration is a handful of environment variables, and it migrates its own
+            database on start.
           </p>
         </SectionHeading>
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div className="min-w-0 space-y-6">
-            <CodeBlock label="Build and run the container">{dockerRun}</CodeBlock>
+            <CodeBlock label={`Run the signed image, ${site.version}`}>{dockerRun}</CodeBlock>
+            <CodeBlock label="Verify its cosign signature first">{cosignVerify}</CodeBlock>
+            <CodeBlock label="Or build it from the source">{buildFromSource}</CodeBlock>
             <CodeBlock label=".env: the essentials (the full list is in .env.example)">{envEssentials}</CodeBlock>
-            <CodeBlock label="Kubernetes: the container, its user and probes">{k8sContainer}</CodeBlock>
+            <CodeBlock label="Kubernetes: pin the image in your overlay of the base">{k8sImagePin}</CodeBlock>
           </div>
           <div className="self-start rounded-card border border-brand-border bg-brand-surface p-6 sm:p-8">
             <h3 className="text-lg font-semibold text-brand-text">What you need</h3>
@@ -678,26 +762,36 @@ function Deploy() {
             </ul>
             <h3 className="mt-8 text-lg font-semibold text-brand-text">The container image</h3>
             <p className="mt-2 text-sm text-brand-muted">
-              Release tags publish <code>{site.image}</code> for linux/amd64 and linux/arm64, tagged with the version
-              and <code>latest</code>, and signed with cosign keyless signing. The first published image comes with{" "}
-              {site.nextVersion}; until then, build it from the source as shown.
+              <code>{site.image}</code> is public, for linux/amd64 and linux/arm64, tagged{" "}
+              <code>{site.imageTag}</code> (and <code>latest</code>), and signed with cosign keyless signing by the
+              release workflow. Pin the digest <code className="break-all">{site.imageDigest}</code>, which is the
+              one for {site.version}.
             </p>
             <h3 className="mt-8 text-lg font-semibold text-brand-text">On Kubernetes</h3>
             <p className="mt-2 text-sm text-brand-muted">
-              Listen on port 8080, use <code>/healthz</code> for liveness and <code>/readyz</code> for readiness, and
-              keep <code>APP_URL</code> equal to the public address. The server closes cleanly on SIGTERM.
+              <code>deploy/kubernetes/</code> in the repository is a Kustomize base: two replicas spread over nodes, a
+              PodDisruptionBudget, a service account with no API token, and default-deny NetworkPolicies (DNS,
+              PostgreSQL and https out; your ingress controller in). It holds no secret values and no namespace. Your
+              overlay pins the image, sets <code>APP_URL</code>, <code>PLATFORM_URL</code>, <code>OIDC_ISSUER</code>{" "}
+              and <code>OIDC_CLIENT_ID</code>, and supplies a Secret with <code>DATABASE_URL</code>,{" "}
+              <code>SESSION_SECRET</code> and <code>OIDC_CLIENT_SECRET</code>, a PostgreSQL database and an Ingress.
+              The server answers <code>/healthz</code> and <code>/readyz</code> on port 8080, and <code>APP_URL</code>{" "}
+              must equal the public address.
             </p>
             <Note>
               Conversation streams stay open: turn off proxy buffering for them and allow at least an hour of idle
               read time (nginx: <code>proxy_buffering off; proxy_read_timeout 1h;</code>). The platform sends a
-              keep-alive every 15 seconds. The repository has no manifests or Helm chart.
+              keep-alive every 15 seconds.
             </Note>
             <div className="mt-6 flex flex-wrap gap-3">
               <ButtonLink href={site.docsUrl}>
                 Deployment docs
                 <ArrowRight className="size-4" />
               </ButtonLink>
-              <ButtonLink href={site.readmeUrl} variant="secondary">
+              <ButtonLink href={site.kubernetesUrl} variant="secondary">
+                Kubernetes base
+              </ButtonLink>
+              <ButtonLink href={site.readmeUrl} variant="ghost">
                 README on GitHub
               </ButtonLink>
             </div>
@@ -710,6 +804,26 @@ function Deploy() {
 
 /* ------------------------------------------------------ Open source */
 
+// CHANGELOG 0.2.0 ("Connecting to the platform", "Usage"), server/app.ts (the usage lock in Connect mode),
+// CHANGELOG 0.1.0 "Known limitations" (nothing in 0.2.0 changes these).
+const notBuilt: ReactNode[] = [
+  <>
+    <Strong>Shared and private threads with team agents.</Strong> A conversation with a team&apos;s agent starts
+    private to you; choosing between shared and private depends on a platform release.
+  </>,
+  <>
+    <Strong>Model, tokens and timing under replies</Strong> arrive with a platform release.
+  </>,
+  <>
+    <Strong>File and image uploads.</Strong>
+  </>,
+  <>
+    <Strong>Admin › Usage with Connect.</Strong> It needs service-account mode, and usage across everyone who has
+    connected isn&apos;t available to the app. Personal usage works in both.
+  </>,
+  <>Editing or branching messages, searching message text, and access by identity-provider group.</>,
+];
+
 function OpenSource() {
   return (
     <section id="status" aria-labelledby="open-source-title" className="scroll-mt-16 border-t border-brand-border bg-brand-surface-sunken py-20 sm:py-24">
@@ -718,7 +832,7 @@ function OpenSource() {
           Open source and project status
         </h2>
         <div className="grid gap-8 lg:grid-cols-2">
-          <article aria-labelledby="oss-title" className="min-w-0 rounded-card border border-brand-border bg-brand-surface p-6 sm:p-8">
+          <article aria-labelledby="oss-title" className="min-w-0 self-start rounded-card border border-brand-border bg-brand-surface p-6 sm:p-8">
             <div className="flex items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-brand-primary-subtle text-brand-link">
                 <Plug className="size-5" />
@@ -758,7 +872,7 @@ function OpenSource() {
               <Eyebrow>Project status</Eyebrow>
             </div>
             <h3 id="status-title" className="mt-3 text-2xl font-semibold tracking-tight text-brand-text">
-              {site.version} is released; {site.nextVersion} is in progress
+              {site.version} is released, and some things are not built yet
             </h3>
             <dl className="mt-6 space-y-5">
               <div>
@@ -767,29 +881,33 @@ function OpenSource() {
                   {site.version}, October 18, 2026
                 </dt>
                 <dd className="mt-2 text-brand-muted">
-                  The first release: chat with your own assistant, the inbox, the animated avatars and single sign-on.
-                  Since then the main branch has gained the rest of this page: provided agents and your own, the admin
-                  dashboard and settings, the inbox synced between devices and driven by the platform&apos;s event
-                  stream, and the optional features. They are in the changelog&apos;s Unreleased section and ship with{" "}
-                  {site.nextVersion}.
+                  People connect their own platform account, and their agents live in their personal workspace beside
+                  their teams&apos;. Also in it: provided agents and your own with Admin › Agents, the inbox
+                  driven live by the platform&apos;s event stream and synced between devices, with shortcuts, tool steps
+                  and readable errors, the admin area and settings, the optional usage features, the Face logo, and a
+                  signed image with a Kubernetes base.
                 </dd>
               </div>
               <div>
                 <dt className="flex items-center gap-2 text-sm font-semibold text-brand-text">
-                  <span className="rounded-full bg-brand-warning-subtle px-2 py-0.5 text-xs text-brand-warning-text">Next</span>
-                  {site.nextVersion}
+                  <span className="rounded-full bg-brand-warning-subtle px-2 py-0.5 text-xs text-brand-warning-text">Not built yet</span>
                 </dt>
                 <dd className="mt-2 text-brand-muted">
-                  Being built now: people connect their own platform account through the platform&apos;s OAuth Connect,
-                  so their agents live in their personal workspace on the platform.
+                  <ul className="space-y-2">
+                    {notBuilt.map((item, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-border-strong" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-semibold text-brand-text">Not yet</dt>
+                <dt className="text-sm font-semibold text-brand-text">Pre-1.0</dt>
                 <dd className="mt-2 text-brand-muted">
-                  Attachments, tool approvals, editing or branching messages, and searching message text. Access by
-                  identity-provider group. Single sign-on is tested against an in-process provider, not a particular
-                  identity provider. Pre-1.0: expect changes between minor releases.
+                  Expect changes between minor releases, and read the changelog before you upgrade. Single sign-on is
+                  tested against an in-process provider, not a particular identity provider.
                 </dd>
               </div>
             </dl>

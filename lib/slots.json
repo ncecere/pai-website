@@ -30,6 +30,18 @@
     "alt": "Pi Agent Interface on a phone: the inbox with a conversation under Working and its row actions shown.",
     "caption": "On touch screens the row actions are always shown."
   },
+  "connect": {
+    "persona": "Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode (PLATFORM_AUTH=connect), captured before she has connected.",
+    "capture": "1440x900. The \"Connect your agents\" screen Priya sees right after signing in: the app's name, the sentence about using her account on the agent platform, the two points (her agents live in her personal workspace with her teams' agents beside them; the app acts only on her agents, as her, and she can disconnect it), the Connect button, and \"Signed in as priya.shah@example.com. Sign out\" under it.",
+    "alt": "The Connect your agents screen: Pi Agent Interface asks Priya Shah to connect her own account on the agent platform, says her agents live in her personal workspace with her teams' agents beside them, and that she can disconnect at any time; a Connect button, and below it her email with Sign out.",
+    "caption": "After signing in, each person connects their own platform account once. Their agents live in their personal workspace, beside their teams' agents."
+  },
+  "account-connection": {
+    "persona": "Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode, captured after she has connected.",
+    "capture": "1440x900. Settings › Account, scrolled to the Agent platform section: Connected account with her platform email and the date she connected, and the Disconnect row with its button. The Profile and Sessions sections may show above and below.",
+    "alt": "Settings › Account, Agent platform: the connected account, Priya Shah's email on the platform and the date she connected, and a Disconnect button with a line saying her agents and conversations stay on the platform.",
+    "caption": "Disconnect any time. Your agents and conversations stay on the platform."
+  },
   "agent-picker": {
     "persona": "Priya Shah (member), Example Corp, dark theme, Face avatars",
     "capture": "1440x900. The agent picker open on a new conversation: provided agents (Assistant, Research) grouped above Priya's own (Release notes), each with its animated avatar.",
@@ -61,16 +73,16 @@
     "caption": "Make people administrators or members, suspend or restore them. A suspension ends their sessions within seconds."
   },
   "admin-features": {
-    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): with Connect, Usage is locked off.",
     "capture": "1440x900. Admin › Features: Usage (on) and Personal usage (off), each with its description.",
     "alt": "Admin › Features: Usage, turned on, and Personal usage, turned off, each with what it does.",
     "caption": "Optional features are enforced by the server and hidden in the browser while they are off."
   },
   "admin-usage": {
-    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): Admin › Usage isn't available with Connect.",
     "capture": "1440x900. Admin › Usage over the last 30 days: requests, tokens and estimated cost per person, and tokens per day.",
     "alt": "Admin › Usage for the last 30 days: requests, tokens and an estimated cost for each person, and a chart of tokens per day.",
-    "caption": "Usage per person, from the platform's usage report, over 7, 30 or 90 days."
+    "caption": "Usage per person, from the platform's usage report, over 7, 30 or 90 days. Needs service-account mode."
   },
   "admin-audit": {
     "persona": "Alex Morgan (administrator), Example Corp, dark theme",

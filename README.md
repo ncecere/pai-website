@@ -1,10 +1,12 @@
 # pai-website
 
-The landing page for [Pi Agent Interface (PAI)](https://github.com/ncecere/pi-agent-interface), a self-hosted, open-source (MIT) chat app for [Pi Durable](https://github.com/ncecere/pi-durable-platform) agents: people sign in with single sign-on, each gets their own agents on the platform, and one inbox follows the work they do. The site is served at https://pai.bitop.dev; the documentation lives in its own repository and site, https://docs.pai.bitop.dev.
+The landing page for [Pi Agent Interface (PAI)](https://github.com/ncecere/pi-agent-interface), a self-hosted, open-source (MIT) chat app for [Pi Durable](https://github.com/ncecere/pi-durable-platform) agents: people sign in with single sign-on, connect their own platform account once so their agents live in their personal workspace beside their teams' agents, and one inbox follows the work they do. The site is served at https://pai.bitop.dev; the documentation lives in its own repository and site, https://docs.pai.bitop.dev.
 
-It's one long page plus a 404 page, with no pricing, sign-up, forms, cookies, tracking or third-party requests. The text describes Pi Agent Interface **at the head of main** (commit `3ae3d9e`, 2026-10-18) and is checked against its `README.md`, `CHANGELOG.md` ("Unreleased" and "0.1.0"), `NOTICE.md`, `server/features.ts`, the routes in `server/app.ts`, `server/config.ts`, `server/session.ts`, `server/main.ts`, `server/agent-settings.ts`, the screens in `src/routes/**`, the `Dockerfile` and `.github/workflows/image.yml`. Nothing on the page describes a feature that isn't built. The latest release is **v0.1.0** (tagged 2026-10-18); most of what the page describes is in the changelog's Unreleased section and ships with v0.2.0, and the project status card says so. The work in progress for v0.2.0 (people connecting their own platform account through the platform's OAuth Connect, so their agents live in their personal workspace) is named only as "next" in that card.
+It's one long page plus a 404 page, with no pricing, sign-up, forms, cookies, tracking or third-party requests. The text describes Pi Agent Interface **v0.2.0** (tag `v0.2.0`, commit `4815fa6`, released 2026-10-18) and is checked against its `README.md`, `CHANGELOG.md` (`## 0.2.0`), `NOTICE.md`, `deploy/kubernetes/README.md`, `server/connect.ts`, `server/connect-agents.ts`, `server/features.ts`, the routes in `server/app.ts`, `server/config.ts`, `server/session.ts`, `server/agent-settings.ts`, the screens in `src/routes/**` and `src/components/connect/`, the `Dockerfile` and `.github/workflows/image.yml`. Nothing on the page describes a feature that isn't built in that release; the project status card lists what isn't built yet, without dates (shared and private threads with team agents and model, tokens and timing under replies wait for a platform release; no file or image uploads; Admin › Usage needs service-account mode).
 
-`lib/site.ts` holds the version and its release day (the footer and sitemap show it), the release notes link (the `## 0.1.0` section of `CHANGELOG.md` at the tag), the next version, the container image name (`ghcr.io/ncecere/pi-agent-interface`, which the product's image workflow publishes for release tags; v0.1.0 was tagged before that workflow existed, so the first image comes with v0.2.0), the repository links (on `main`, because the page describes main; pin them at a tag once a release catches up with the page), the docs URL and the example hosts (`chat.example.com` for the chat app, `agents.example.com` for the platform).
+**Connect** (people connect their own platform account once; their agents live in their personal workspace beside their teams' agents; the server keeps their tokens encrypted; service-account mode remains for platforms without Connect) is the headline: the first feature card, the "How it works" diagram with its Connect and Service account cards, and the Connect gallery in the screenshots.
+
+`lib/site.ts` holds the version and its release day (the footer and sitemap show it), the release notes link (the GitHub Release page for the tag), the container image (`ghcr.io/ncecere/pi-agent-interface`, tag `v0.2.0`, the multi-arch index digest `sha256:b3d6103f...b41c` and the cosign keyless identity and issuer shown in the `cosign verify` command), the repository links (pinned at `blob/v0.2.0` or `tree/v0.2.0`: move the `tag` constant when a later release has been checked against the page), the docs URL and the example hosts (`chat.example.com` for the chat app, `agents.example.com` for the platform). The image is public (anonymous pull works) with linux/amd64 and linux/arm64 manifests; the digest was read from the registry on 2026-10-18. The `cosign verify` command has not been run from this repository (cosign isn't installed here); re-check it when the tag moves.
 
 **Naming.** The page leads with "Pi Agent Interface" (title, hero, metadata) and uses "PAI" only as a short form after it. The text names no competing chat or agent products. Open Chat Interface (the sister product the web app is derived from) and Pi Durable (the platform it is for) are named on purpose. The inbox follows the design of another product's thread sidebar; that credit is in the product's `NOTICE.md`, not on this page. Examples use generic names (`chat.example.com`, Example Corp) and never a real installation. `scripts/postbuild.mjs` fails the build if a page uses a forbidden name, names a `bitop.dev` host other than this site and its docs, or uses "PAI" before "Pi Agent Interface".
 
@@ -39,7 +41,7 @@ The logo is "Face": an amber face with two upright eyes on a near-black tile, th
 
 ## Screenshots
 
-The page has 13 named screenshot slots (the hero and three galleries: chat and inbox, agents, administration), listed in `lib/slots.json` with their alt text, captions and, for the capture, the persona and what each should show. A slot without an image shows a clearly marked placeholder with the expected file name. **No screenshots exist yet**: every slot is a placeholder until the Example Corp demo capture.
+The page has 15 named screenshot slots (the hero and four galleries: chat and inbox, Connect, agents, administration), listed in `lib/slots.json` with their alt text, captions and, for the capture, the persona and what each should show. A slot without an image shows a clearly marked placeholder with the expected file name. **No screenshots exist yet**: every slot is a placeholder until the Example Corp demo capture.
 
 `SCREENSHOTS.md` is the capture list, generated from `lib/slots.json` by `npm run manifest` (CI fails if it is out of date). It names the demo installation (Example Corp at `chat.example.com`; Priya Shah, member, and Alex Morgan, administrator; the provided agents Assistant and Research and Priya's own Release notes), the sizes, and per slot the file, persona and contents.
 
@@ -58,13 +60,15 @@ Commit the results (`public/images/`, `lib/screenshots.json`, `public/og.png`, i
 | `inbox-rows` | Inbox rows with Working (timer), Done, Failed, Woke, a pin, and the hover actions |
 | `inbox-snooze` | A row's Snooze menu with wake times and Custom…; the Snoozed, Settled and Archived shelves |
 | `phone-inbox` | The inbox on a phone (390x844 at 2x), row actions shown |
+| `connect` | The "Connect your agents" screen after signing in, before the person has connected (needs a Connect-mode deployment) |
+| `account-connection` | Settings › Account, Agent platform: the connected account and Disconnect (Connect mode, after connecting) |
 | `agent-picker` | The agent picker: provided agents above the person's own, with avatars |
 | `my-agents` | Settings › My agents, with the dialog to make an agent |
 | `avatar-styles` | Settings › Customization with the avatar styles Face, Signal and Pixel |
 | `admin-agents` | Admin › Agents: default model, limits, model choice, templates, provided agents |
 | `admin-people` | Admin › People |
-| `admin-features` | Admin › Features: Usage and Personal usage |
-| `admin-usage` | Admin › Usage per person, last 30 days |
+| `admin-features` | Admin › Features: Usage and Personal usage (service-account mode: Connect locks Usage off) |
+| `admin-usage` | Admin › Usage per person, last 30 days (service-account mode only) |
 | `admin-audit` | Admin › Audit log |
 
 ## Local development
