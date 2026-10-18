@@ -1,0 +1,7 @@
+{
+  "_comment": "The Pi Agent Interface mark, \"Face\" (inner SVG markup on the 64 grid), written by `npm run og` from ../pai-assets/logo/<source>/: `svg` is mark-small.svg, the drawing for 20 to 47 px, used by components/logo.tsx (28 px, header and footer); `svgRegular` is mark.svg, the drawing for 48 px and up, used by scripts/og-image.mjs for the Open Graph card. If the logo changes, run `npm run og` again and commit.",
+  "source": "face",
+  "viewBox": "0 0 64 64",
+  "svg": "<rect width=\"64\" height=\"64\" rx=\"14\" fill=\"#171717\"/><circle cx=\"32\" cy=\"32\" r=\"21\" fill=\"#fe9a00\"/><rect x=\"22.5\" y=\"24.5\" width=\"6.5\" height=\"12\" rx=\"3.25\" fill=\"#171717\"/><rect x=\"35\" y=\"24.5\" width=\"6.5\" height=\"12\" rx=\"3.25\" fill=\"#171717\"/>",
+  "svgRegular": "<rect width=\"64\" height=\"64\" rx=\"14\" fill=\"#171717\"/><circle cx=\"32\" cy=\"32\" r=\"20\" fill=\"#fe9a00\"/><rect x=\"23.25\" y=\"25\" width=\"5.5\" height=\"11\" rx=\"2.75\" fill=\"#171717\"/><rect x=\"35.25\" y=\"25\" width=\"5.5\" height=\"11\" rx=\"2.75\" fill=\"#171717\"/>"
+}

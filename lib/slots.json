@@ -1,0 +1,81 @@
+{
+  "chat-inbox": {
+    "persona": "Priya Shah (member), Example Corp, dark theme, Face avatars",
+    "capture": "Hero, 1440x900. A conversation with Assistant open on the right: Priya's question, a finished reply with its reasoning and two tool steps folded above a Markdown answer with a table. The inbox on the left with a pinned row, one row under Working with its timer, and Inbox rows marked Done and Failed. Also drawn into public/og.png.",
+    "alt": "Pi Agent Interface for Priya Shah at Example Corp: the inbox on the left, with a pinned conversation, one under Working with a running timer, and Inbox rows marked Done and Failed; on the right a conversation with Assistant, its reasoning and tool steps folded above an answer with a table.",
+    "caption": "Every conversation with every one of your agents, in one inbox that shows what is working, what is done and what failed."
+  },
+  "tool-steps": {
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "1440x900. A reply whose tool steps are open: a terminal step showing \"$ command\" and its output, a step with simple inputs as name and value, JSON output indented, the Copy button visible; one step red because it failed.",
+    "alt": "A reply with its tool steps opened: a terminal command shown as \"$ command\" with its output, a web search with its query, indented JSON output with a Copy button, and one step marked in red because it failed.",
+    "caption": "Each tool step shows what it acted on. Opened, it shows the command, the inputs and the output, ready to copy."
+  },
+  "inbox-rows": {
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "1440x900, cropped to the sidebar is fine. Inbox rows of three lines (agent, title, time): Working with a timer, Done, Failed and Woke in the corner, a pin on a pinned row, and the hover actions Pin, Snooze and Settle on the row under the pointer.",
+    "alt": "The inbox: rows showing the agent, the conversation's title and a compact time, with Working and a timer, Done, Failed and Woke in the corner, a pin on a pinned row, and the hover actions Pin, Snooze and Settle.",
+    "caption": "Working, Done and Failed come from the platform's own status, live from its event stream."
+  },
+  "inbox-snooze": {
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "1440x900. A row's Snooze menu open, listing each choice with its wake time and Custom…; the Snoozed, Settled and Archived shelves visible below the inbox.",
+    "alt": "A conversation's Snooze menu, with each choice showing when the conversation will come back, and Custom…; below the inbox, the Snoozed, Settled and Archived shelves.",
+    "caption": "A snooze ends early when the agent finishes or fails. Settled conversations come back when something new happens."
+  },
+  "phone-inbox": {
+    "shape": "phone",
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "390x844 at 2x. The inbox on a phone, with a conversation under Working and the row actions shown (they are always visible on touch screens).",
+    "alt": "Pi Agent Interface on a phone: the inbox with a conversation under Working and its row actions shown.",
+    "caption": "On touch screens the row actions are always shown."
+  },
+  "agent-picker": {
+    "persona": "Priya Shah (member), Example Corp, dark theme, Face avatars",
+    "capture": "1440x900. The agent picker open on a new conversation: provided agents (Assistant, Research) grouped above Priya's own (Release notes), each with its animated avatar.",
+    "alt": "The agent picker on a new conversation: the provided agents Assistant and Research, and Priya's own agent Release notes, each with its avatar.",
+    "caption": "The agents your administrators provide, and the ones you made, in one picker."
+  },
+  "my-agents": {
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "1440x900. Settings › My agents with one agent of her own and the dialog to make another: a name, a template from the allowed ones, and a model.",
+    "alt": "Settings › My agents: Priya's agent Release notes, and the dialog to make another, with a name, a template chosen from the allowed ones and a model.",
+    "caption": "Make agents from the templates your administrators allow, rename them, move them to another model, or delete them."
+  },
+  "avatar-styles": {
+    "persona": "Priya Shah (member), Example Corp, dark theme",
+    "capture": "1440x900. Settings › Customization: appearance, accent and the Avatar style choice showing Face, Signal and Pixel.",
+    "alt": "Settings › Customization: the appearance and accent, and the avatar styles Face, Signal and Pixel to choose from.",
+    "caption": "Avatars show what the agent is doing: thinking, working, waiting, needs you, done, error or asleep."
+  },
+  "admin-agents": {
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "capture": "1440x900. Admin › Agents: Everyone's agents (default model, agents each person may make: 5, People choose the model on, the allowed templates) and Provided agents (Assistant and Research).",
+    "alt": "Admin › Agents: the default model, five agents each person may make, people choosing the model, the allowed templates, and the provided agents Assistant and Research.",
+    "caption": "Every person gets a private copy of each provided agent. Models and templates are the ones the platform offers the team."
+  },
+  "admin-people": {
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "capture": "1440x900. Admin › People: the Example Corp people with their roles (administrator or member), status (one suspended) and when each was last seen, with the search field.",
+    "alt": "Admin › People: Example Corp's people with their role, administrator or member, their status, one suspended, and when each was last seen.",
+    "caption": "Make people administrators or members, suspend or restore them. A suspension ends their sessions within seconds."
+  },
+  "admin-features": {
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "capture": "1440x900. Admin › Features: Usage (on) and Personal usage (off), each with its description.",
+    "alt": "Admin › Features: Usage, turned on, and Personal usage, turned off, each with what it does.",
+    "caption": "Optional features are enforced by the server and hidden in the browser while they are off."
+  },
+  "admin-usage": {
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "capture": "1440x900. Admin › Usage over the last 30 days: requests, tokens and estimated cost per person, and tokens per day.",
+    "alt": "Admin › Usage for the last 30 days: requests, tokens and an estimated cost for each person, and a chart of tokens per day.",
+    "caption": "Usage per person, from the platform's usage report, over 7, 30 or 90 days."
+  },
+  "admin-audit": {
+    "persona": "Alex Morgan (administrator), Example Corp, dark theme",
+    "capture": "1440x900. Admin › Audit log: recent changes such as a role change, a suspension, the agent settings, a provided agent and a feature turned on, each with who and when.",
+    "alt": "Admin › Audit log: recent changes, among them a role change, a suspension, new agent settings and a feature turned on, each with who made it and when.",
+    "caption": "Every administrative change is recorded."
+  }
+}
