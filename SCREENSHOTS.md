@@ -17,21 +17,21 @@ Phone captures are 390x844 at 2x. Save them as PNG under the expected name in `.
 
 | File | Shape | Persona | What it should show | Status |
 |---|---|---|---|---|
-| `chat-inbox.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme, Face avatars | Hero, 1440x900. A conversation with Assistant open on the right: Priya's question, a finished reply with its reasoning and two tool steps folded above a Markdown answer with a table. The inbox on the left with a pinned row, one row under Working with its timer, and Inbox rows marked Done and Failed. Also drawn into public/og.png. | placeholder |
-| `tool-steps.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. A reply whose tool steps are open: a terminal step showing "$ command" and its output, a step with simple inputs as name and value, JSON output indented, the Copy button visible; one step red because it failed. | placeholder |
-| `inbox-rows.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900, cropped to the sidebar is fine. Inbox rows of three lines (agent, title, time): Working with a timer, Done, Failed and Woke in the corner, a pin on a pinned row, and the hover actions Pin, Snooze and Settle on the row under the pointer. | placeholder |
-| `inbox-snooze.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. A row's Snooze menu open, listing each choice with its wake time and Custom…; the Snoozed, Settled and Archived shelves visible below the inbox. | placeholder |
-| `phone-inbox.png` | phone, 390x844 @2x | Priya Shah (member), Example Corp, dark theme | 390x844 at 2x. The inbox on a phone, with a conversation under Working and the row actions shown (they are always visible on touch screens). | placeholder |
-| `connect.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode (PLATFORM_AUTH=connect), captured before she has connected. | 1440x900. The "Connect your agents" screen Priya sees right after signing in: the app's name, the sentence about using her account on the agent platform, the two points (her agents live in her personal workspace with her teams' agents beside them; the app acts only on her agents, as her, and she can disconnect it), the Connect button, and "Signed in as priya.shah@example.com. Sign out" under it. | placeholder |
-| `account-connection.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode, captured after she has connected. | 1440x900. Settings › Account, scrolled to the Agent platform section: Connected account with her platform email and the date she connected, and the Disconnect row with its button. The Profile and Sessions sections may show above and below. | placeholder |
-| `agent-picker.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme, Face avatars | 1440x900. The agent picker open on a new conversation: provided agents (Assistant, Research) grouped above Priya's own (Release notes), each with its animated avatar. | placeholder |
-| `my-agents.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. Settings › My agents with one agent of her own and the dialog to make another: a name, a template from the allowed ones, and a model. | placeholder |
-| `avatar-styles.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. Settings › Customization: appearance, accent and the Avatar style choice showing Face, Signal and Pixel. | placeholder |
-| `admin-agents.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › Agents: Everyone's agents (default model, agents each person may make: 5, People choose the model on, the allowed templates) and Provided agents (Assistant and Research). | placeholder |
-| `admin-people.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › People: the Example Corp people with their roles (administrator or member), status (one suspended) and when each was last seen, with the search field. | placeholder |
-| `admin-features.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): with Connect, Usage is locked off. | 1440x900. Admin › Features: Usage (on) and Personal usage (off), each with its description. | placeholder |
-| `admin-usage.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): Admin › Usage isn't available with Connect. | 1440x900. Admin › Usage over the last 30 days: requests, tokens and estimated cost per person, and tokens per day. | placeholder |
-| `admin-audit.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › Audit log: recent changes such as a role change, a suspension, the agent settings, a provided agent and a feature turned on, each with who and when. | placeholder |
+| `chat-inbox.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme, Face avatars | Hero, 1440x900. A conversation with Assistant open on the right: Priya's question, a finished reply with its reasoning and two tool steps folded above a Markdown answer with a table. The inbox on the left with a pinned row, one row under Working with its timer, and Inbox rows marked Done and Failed. Also drawn into public/og.png. | filled |
+| `tool-steps.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. A reply whose tool steps are open: a terminal step showing "$ command" and its output, a step with simple inputs as name and value, JSON output indented, the Copy button visible; one step that failed, with an alert icon and the word "failed". | filled |
+| `inbox-rows.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900, cropped to the sidebar is fine. Inbox rows of three lines (agent, title, time): Working with a timer, Done, Failed and Woke in the corner, a pin on a pinned row, and the hover actions Pin, Snooze and Settle on the row under the pointer. | filled |
+| `inbox-snooze.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. A row's Snooze menu open, listing each choice with its wake time and Custom…; the Snoozed, Settled and Archived shelves visible below the inbox. | filled |
+| `phone-inbox.png` | phone, 390x844 @2x | Priya Shah (member), Example Corp, dark theme | 390x844 at 2x. The inbox on a phone, with a conversation under Working and the row actions shown (they are always visible on touch screens). | filled |
+| `connect.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode (PLATFORM_AUTH=connect), captured before she has connected. | 1440x900. The "Connect your agents" screen Priya sees right after signing in: the app's name, the sentence about using her account on the agent platform, the two points (her agents live in her personal workspace with her teams' agents beside them; the app acts only on her agents, as her, and she can disconnect it), the Connect button, and "Signed in as priya.shah@example.com. Sign out" under it. | filled |
+| `account-connection.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme. Needs a deployment in Connect mode, captured after she has connected. | 1440x900. Settings › Account, scrolled to the Agent platform section: Connected account with her platform email, and the Disconnect row with its button. The Profile and Sessions sections may show above and below. | filled |
+| `agent-picker.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme, Face avatars | 1440x900. The agent picker open on a new conversation: provided agents (Assistant, HR Helper) grouped above Priya's own (Release notes), each with its animated avatar. | filled |
+| `my-agents.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. Settings › My agents with one agent of her own and the dialog to make another: a name, a template from the allowed ones, and a model. | filled |
+| `avatar-styles.png` | desktop, 1440x900 | Priya Shah (member), Example Corp, dark theme | 1440x900. Settings › Customization: appearance, accent and the Avatar style choice showing Face, Signal and Pixel. | filled |
+| `admin-agents-alex.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › Agents: Everyone's agents (default model, agents each person may make: 5, People choose the model on, the allowed templates) and Provided agents (Assistant and HR Helper). | filled |
+| `admin-people-alex.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › People: the Example Corp people with their roles (administrator or member), status (one suspended) and when each was last seen, with the search field. | filled |
+| `admin-features-alex.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): with Connect, Usage is locked off. | 1440x900. Admin › Features: Usage (on) and Personal usage (off), each with its description. | filled |
+| `admin-usage-alex.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme. Needs a deployment in service-account mode (PLATFORM_AUTH=service): Admin › Usage isn't available with Connect. | 1440x900. Admin › Usage over the last 30 days: requests, tokens and estimated cost per person, and tokens per day. | filled |
+| `admin-audit-alex.png` | desktop, 1440x900 | Alex Morgan (administrator), Example Corp, dark theme | 1440x900. Admin › Audit log: recent changes such as a role change, a suspension, the agent settings, a provided agent and a feature turned on, each with who and when. | filled |
 
 ## Alt text and captions
 
@@ -44,7 +44,7 @@ As the page uses them; update `lib/slots.json` if a capture differs.
 
 ### `tool-steps`
 
-- Alt: A reply with its tool steps opened: a terminal command shown as "$ command" with its output, a web search with its query, indented JSON output with a Copy button, and one step marked in red because it failed.
+- Alt: A reply with its tool steps opened: a terminal command shown as "$ command" with its output, a web search with its query, indented JSON output with a Copy button, and one step that failed, marked with an alert icon and the word "failed".
 - Caption: Each tool step shows what it acted on. Opened, it shows the command, the inputs and the output, ready to copy.
 
 ### `inbox-rows`
@@ -69,12 +69,12 @@ As the page uses them; update `lib/slots.json` if a capture differs.
 
 ### `account-connection`
 
-- Alt: Settings › Account, Agent platform: the connected account, Priya Shah's email on the platform and the date she connected, and a Disconnect button with a line saying her agents and conversations stay on the platform.
+- Alt: Settings › Account, Agent platform: the connected account, Priya Shah's email on the platform, and a Disconnect button with a line saying her agents and conversations stay on the platform.
 - Caption: Disconnect any time. Your agents and conversations stay on the platform.
 
 ### `agent-picker`
 
-- Alt: The agent picker on a new conversation: the provided agents Assistant and Research, and Priya's own agent Release notes, each with its avatar.
+- Alt: The agent picker on a new conversation: the provided agents Assistant and HR Helper, and Priya's own agent Release notes, each with its avatar.
 - Caption: The agents your administrators provide, and the ones you made, in one picker.
 
 ### `my-agents`
@@ -89,7 +89,7 @@ As the page uses them; update `lib/slots.json` if a capture differs.
 
 ### `admin-agents`
 
-- Alt: Admin › Agents: the default model, five agents each person may make, people choosing the model, the allowed templates, and the provided agents Assistant and Research.
+- Alt: Admin › Agents: the default model, five agents each person may make, people choosing the model, the allowed templates, and the provided agents Assistant and HR Helper.
 - Caption: Every person gets a private copy of each provided agent. Models and templates are the ones the platform offers the team.
 
 ### `admin-people`

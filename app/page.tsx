@@ -18,8 +18,9 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.3.0
- * (github.com/ncecere/pi-agent-interface, tag v0.3.0, commit b78e988,
+ * Every claim here is checked against Pi Agent Interface v0.3.0, and still holds for v0.3.1, which
+ * only fixes two inbox display glitches
+ * (github.com/ncecere/pi-agent-interface, tag v0.3.1, commit fe94cdb,
  * 2026-10-18): README.md, CHANGELOG.md ("0.2.0", "0.3.0"), NOTICE.md,
  * deploy/kubernetes/README.md, server/connect.ts, server/connect-agents.ts,
  * server/features.ts, the routes in server/app.ts, server/config.ts,

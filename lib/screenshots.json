@@ -1,1 +1,77 @@
-{}
+{
+  "chat-inbox": {
+    "src": "/images/chat-inbox.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "tool-steps": {
+    "src": "/images/tool-steps.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "inbox-rows": {
+    "src": "/images/inbox-rows.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "inbox-snooze": {
+    "src": "/images/inbox-snooze.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "phone-inbox": {
+    "src": "/images/phone-inbox.webp",
+    "width": 720,
+    "height": 1558
+  },
+  "connect": {
+    "src": "/images/connect.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "account-connection": {
+    "src": "/images/account-connection.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "agent-picker": {
+    "src": "/images/agent-picker.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "my-agents": {
+    "src": "/images/my-agents.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "avatar-styles": {
+    "src": "/images/avatar-styles.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "admin-agents": {
+    "src": "/images/admin-agents.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "admin-people": {
+    "src": "/images/admin-people.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "admin-features": {
+    "src": "/images/admin-features.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "admin-usage": {
+    "src": "/images/admin-usage.webp",
+    "width": 1440,
+    "height": 900
+  },
+  "admin-audit": {
+    "src": "/images/admin-audit.webp",
+    "width": 1440,
+    "height": 900
+  }
+}
