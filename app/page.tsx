@@ -18,21 +18,23 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.3.0, and still holds for v0.3.1, which
- * only fixes two inbox display glitches
- * (github.com/ncecere/pi-agent-interface, tag v0.3.1, commit fe94cdb,
- * 2026-10-18): README.md, CHANGELOG.md ("0.2.0", "0.3.0"), NOTICE.md,
- * deploy/kubernetes/README.md, server/connect.ts, server/connect-agents.ts,
- * server/features.ts, the routes in server/app.ts, server/config.ts,
- * server/session.ts, server/agent-settings.ts, the screens in src/routes/**
- * and src/components/connect/, the Dockerfile and
- * .github/workflows/image.yml.
+ * Every claim here is checked against Pi Agent Interface v0.4.0
+ * (github.com/ncecere/pi-agent-interface, tag v0.4.0, commit b193eed,
+ * 2026-10-19): README.md, ROADMAP.md, CHANGELOG.md ("0.2.0", "0.3.0",
+ * "0.4.0"), NOTICE.md, deploy/kubernetes/README.md, server/connect.ts,
+ * server/connect-agents.ts, server/features.ts, the routes in server/app.ts,
+ * server/config.ts, server/session.ts, server/agent-settings.ts, the screens
+ * in src/routes/** and src/components/connect/, the Dockerfile and
+ * .github/workflows/image.yml (the last two unchanged since v0.3.1).
  * Keep it that way: nothing on this page may describe a feature that isn't
  * built in the released version. What isn't built yet is said in the project
  * status card.
  */
 
 const appUrl = `https://${site.exampleHost}`;
+
+// A page of the documentation site.
+const docs = (path: string) => `${site.docsUrl}${path}`;
 
 export default function Home() {
   return (
@@ -607,6 +609,14 @@ function Features() {
                 seven days by default. &ldquo;Sign out everywhere&rdquo; ends them all.
               </>,
               <>
+                <Strong>Sign-in by group:</Strong> limit sign-in to the identity-provider groups you list, and let a
+                group decide who is an administrator, checked on every sign-in (<TextLink href={docs("/docs/operate/sign-in")}>sign-in docs</TextLink>).
+              </>,
+              <>
+                <Strong>Rotating the session secret</Strong> keeps people signed in and connected: the old secret is still
+                accepted while the new one takes over (<TextLink href={docs("/docs/operate/rotating-the-session-secret")}>how</TextLink>).
+              </>,
+              <>
                 <Strong>CSRF protection:</Strong> every write needs the session&apos;s token and must come from the
                 app&apos;s own origin.
               </>,
@@ -738,6 +748,23 @@ const requirements: ReactNode[] = [
   </>,
 ];
 
+// README "Metrics", "Backing up and restoring" and "Accessibility"; CHANGELOG 0.4.0.
+const operating: ReactNode[] = [
+  <>
+    <Strong>Metrics</Strong> for Prometheus, off until you turn them on, on a port of their own so exposing the app
+    doesn&apos;t expose them. The Kubernetes base has an optional component with eight example alerts (
+    <TextLink href={docs("/docs/operate/metrics")}>metrics docs</TextLink>).
+  </>,
+  <>
+    <Strong>A rehearsed restore:</Strong> what the database holds, what a restore needs, and how to rehearse one on
+    CloudNativePG (<TextLink href={docs("/docs/operate/upgrades-and-backups")}>backups docs</TextLink>).
+  </>,
+  <>
+    <Strong>Accessibility checks</Strong> (axe) run in CI in both themes, next to browser tests; what isn&apos;t
+    checked is listed (<TextLink href={docs("/docs/use/accessibility")}>accessibility docs</TextLink>).
+  </>,
+];
+
 function Deploy() {
   return (
     <section id="deploy" aria-labelledby="deploy-title" className="scroll-mt-16 border-t border-brand-border py-20 sm:py-24">
@@ -786,6 +813,15 @@ function Deploy() {
               The server answers <code>/healthz</code> and <code>/readyz</code> on port 8080, and <code>APP_URL</code>{" "}
               must equal the public address.
             </p>
+            <h3 className="mt-8 text-lg font-semibold text-brand-text">Running it for other people</h3>
+            <ul className="mt-4 space-y-3 text-sm text-brand-muted">
+              {operating.map((r, i) => (
+                <li key={i} className="flex gap-2">
+                  <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-highlight" />
+                  <span>{r}</span>
+                </li>
+              ))}
+            </ul>
             <Note>
               Conversation streams stay open: turn off proxy buffering for them and allow at least an hour of idle
               read time (nginx: <code>proxy_buffering off; proxy_read_timeout 1h;</code>). The platform sends a
@@ -813,21 +849,20 @@ function Deploy() {
 /* ------------------------------------------------------ Open source */
 
 // CHANGELOG 0.2.0 ("Connecting to the platform", "Usage"), server/app.ts (the usage lock in Connect mode),
-// CHANGELOG 0.1.0 "Known limitations" (nothing in 0.2.0 or 0.3.0 changes these).
+// ROADMAP.md at v0.4.0 ("v0.5 Usage and history", "Later (needs the platform)").
+// The roadmap is complete as of v0.4.0; the items are in its order.
 const notBuilt: ReactNode[] = [
-  <>
-    <Strong>Files and images in a message, steering a reply in progress, approving tool calls, and editing or
-    branching messages.</Strong> Each needs the platform to offer something first; a message sent while an agent is
-    working waits for the reply to end.
-  </>,
   <>
     <Strong>Admin › Usage with Connect.</Strong> It needs service-account mode, and usage across everyone who has
     connected isn&apos;t available to the app. Personal usage works in both.
   </>,
   <>
-    Access and the administrator role by identity-provider group (today the sign-in provider limits who comes in),
-    rotating the session secret without people reconnecting, metrics, paging and searching long conversation lists,
-    searching message text, and browser tests and an accessibility audit.
+    Paging and searching long conversation lists, and searching the text of messages (which needs the platform).
+  </>,
+  <>
+    <Strong>Files and images in a message, steering a reply in progress, approving tool calls, and editing or
+    branching messages.</Strong> Each needs the platform to offer something first; a message sent while an agent is
+    working waits for the reply to end.
   </>,
 ];
 
@@ -885,14 +920,16 @@ function OpenSource() {
               <div>
                 <dt className="flex items-center gap-2 text-sm font-semibold text-brand-text">
                   <span className="rounded-full bg-brand-success-subtle px-2 py-0.5 text-xs text-brand-success-text">Released</span>
-                  {site.version}, October 18, 2026
+                  {site.version}, October 19, 2026
                 </dt>
                 <dd className="mt-2 text-brand-muted">
                   People connect their own platform account, and their agents live in their personal workspace beside
                   their teams&apos;. Also in it: provided agents and your own with Admin › Agents, the inbox
                   driven live by the platform&apos;s event stream and synced between devices, with shortcuts, tool steps
                   and readable errors, when, which model and how many tokens under each reply when the platform records them, the admin area and settings, the optional usage features, the Face logo, and a
-                  signed image with a Kubernetes base.
+                  signed image with a Kubernetes base. New in this release: sign-in limited, and administrators set, by
+                  identity-provider group; rotating the session secret without anyone reconnecting; Prometheus metrics
+                  with example alerts; a rehearsed database restore; and browser and accessibility tests in CI.
                 </dd>
               </div>
               <div>
