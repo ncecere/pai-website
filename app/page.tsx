@@ -18,10 +18,10 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.4.0
- * (github.com/ncecere/pi-agent-interface, tag v0.4.0, commit b193eed,
+ * Every claim here is checked against Pi Agent Interface v0.5.0
+ * (github.com/ncecere/pi-agent-interface, tag v0.5.0, commit df32023,
  * 2026-10-19): README.md, ROADMAP.md, CHANGELOG.md ("0.2.0", "0.3.0",
- * "0.4.0"), NOTICE.md, deploy/kubernetes/README.md, server/connect.ts,
+ * "0.4.0", "0.5.0"), NOTICE.md, deploy/kubernetes/README.md, server/connect.ts,
  * server/connect-agents.ts, server/features.ts, the routes in server/app.ts,
  * server/config.ts, server/session.ts, server/agent-settings.ts, the screens
  * in src/routes/** and src/components/connect/, the Dockerfile and
@@ -217,8 +217,8 @@ function HowItWorks() {
                 ))}
               </ol>
               <p className="mt-4 border-t border-brand-border pt-3 text-xs text-brand-subtle">
-                Its own PostgreSQL: people, roles, settings, preferences, inbox state, the audit log and the encrypted
-                connection tokens
+                Its own PostgreSQL: people, roles, settings, preferences, inbox state, the audit log, the encrypted
+                connection tokens and, only if message search is turned on, a searchable copy of message text
               </p>
             </div>
 
@@ -239,7 +239,7 @@ function HowItWorks() {
             </div>
           </div>
           <figcaption className="mt-4 text-sm text-brand-muted">
-            Conversations stay on the platform; the chat app keeps no copy. The diagram shows Connect, the default.
+            Conversations stay on the platform; the chat app keeps no copy unless an administrator turns on message search. The diagram shows Connect, the default.
           </figcaption>
         </figure>
 
@@ -451,6 +451,11 @@ function Features() {
                 any device. It polls only while the stream is down.
               </>,
               <>
+                <Strong>Long lists stay fast:</Strong> each shelf is drawn 40 conversations at a time, with{" "}
+                <Strong>Show more</Strong> for the next 40, and a search looks through all of them (see{" "}
+                <TextLink href={docs("/docs/use/inbox")}>the inbox docs</TextLink>).
+              </>,
+              <>
                 <Strong>Pin, Snooze and Settle</Strong> on hover, everything else in the right-click menu, and Undo for
                 every change but Delete. Snoozing shows each wake time and offers Custom…
               </>,
@@ -545,8 +550,8 @@ function Features() {
                 including the sign-in page.
               </>,
               <>
-                <Strong>Features</Strong>, <Strong>Usage</Strong> (service-account mode) and the{" "}
-                <Strong>Audit log</Strong>.
+                <Strong>Features</Strong>, <Strong>Usage</Strong> (service-account mode, or for connected people) and
+                the <Strong>Audit log</Strong>.
               </>,
             ]}
             note={
@@ -563,11 +568,11 @@ function Features() {
             id="feature-optional"
             icon={<Toggle className="size-5" />}
             eyebrow="Optional features"
-            title="Usage per person, and for each person"
+            title="Usage, and search inside messages"
             lead={
               <p>
                 Optional features are parts of the app an instance can do without. Administrators turn them on and off
-                under Admin › Features; the server refuses their routes while they are off, and the browser hides them.
+                under Admin › Features; the server refuses their routes while they are off, and the browser hides them (<TextLink href={docs("/docs/administer/features")}>features docs</TextLink>).
               </p>
             }
             bullets={[
@@ -580,12 +585,22 @@ function Features() {
                 <Strong>Personal usage</Strong> (off by default): Settings › Usage shows each person their own
                 agents&apos; requests, tokens and estimated cost, per agent and per day. Nobody sees anyone else&apos;s.
               </>,
+              <>
+                <Strong>Usage of connected people</Strong> (off by default, Connect): Admin › Usage shows each connected
+                person&apos;s personal-workspace agents, and lists apart the people who haven&apos;t connected rather
+                than counting them as zero (<TextLink href={docs("/docs/administer/usage")}>usage docs</TextLink>).
+              </>,
+              <>
+                <Strong>Search message text</Strong> (off by default): the sidebar&apos;s search also looks inside
+                messages. To do that the app keeps a searchable copy of the text of conversations opened in it, in its
+                own database; each person searches only their own, and turning the feature off deletes every copy.
+              </>,
             ]}
             note={
               <>
                 Costs appear once the platform has prices for the models. With Connect, people&apos;s agents are in their
-                own workspaces, which the app&apos;s administrators don&apos;t see, so Usage is locked off; Personal usage
-                still works. A deployment can turn a feature off for good with <code>DISABLED_FEATURES</code>.
+                own workspaces, which the app&apos;s administrators don&apos;t see, so the team-wide Usage is locked off; Usage
+                of connected people and Personal usage still work. A deployment can turn a feature off for good with <code>DISABLED_FEATURES</code>.
               </>
             }
           />
@@ -849,20 +864,18 @@ function Deploy() {
 /* ------------------------------------------------------ Open source */
 
 // CHANGELOG 0.2.0 ("Connecting to the platform", "Usage"), server/app.ts (the usage lock in Connect mode),
-// ROADMAP.md at v0.4.0 ("v0.5 Usage and history", "Later (needs the platform)").
-// The roadmap is complete as of v0.4.0; the items are in its order.
+// ROADMAP.md at v0.5.0 ("Waiting on the Pi Durable platform", "Could be better, whenever the platform allows").
+// The roadmap is complete as of v0.5.0; the items are in its order.
 const notBuilt: ReactNode[] = [
-  <>
-    <Strong>Admin › Usage with Connect.</Strong> It needs service-account mode, and usage across everyone who has
-    connected isn&apos;t available to the app. Personal usage works in both.
-  </>,
-  <>
-    Paging and searching long conversation lists, and searching the text of messages (which needs the platform).
-  </>,
   <>
     <Strong>Files and images in a message, steering a reply in progress, approving tool calls, and editing or
     branching messages.</Strong> Each needs the platform to offer something first; a message sent while an agent is
     working waits for the reply to end.
+  </>,
+  <>
+    Paging in the platform&apos;s conversation list and searching messages on the platform, which the app would
+    use when they exist. For now the whole list still comes from the platform, and message search uses the app&apos;s
+    own copy of the conversations opened in it.
   </>,
 ];
 
@@ -926,10 +939,11 @@ function OpenSource() {
                   People connect their own platform account, and their agents live in their personal workspace beside
                   their teams&apos;. Also in it: provided agents and your own with Admin › Agents, the inbox
                   driven live by the platform&apos;s event stream and synced between devices, with shortcuts, tool steps
-                  and readable errors, when, which model and how many tokens under each reply when the platform records them, the admin area and settings, the optional usage features, the Face logo, and a
-                  signed image with a Kubernetes base. New in this release: sign-in limited, and administrators set, by
-                  identity-provider group; rotating the session secret without anyone reconnecting; Prometheus metrics
-                  with example alerts; a rehearsed database restore; and browser and accessibility tests in CI.
+                  and readable errors, when, which model and how many tokens under each reply when the platform records them, the admin area and settings, the optional usage features, the Face logo, sign-in limited, and administrators
+                  set, by identity-provider group, rotating the session secret without anyone reconnecting, Prometheus
+                  metrics with example alerts, a rehearsed database restore, browser and accessibility tests in CI, and
+                  a signed image with a Kubernetes base. New in this release: long conversation lists that stay fast,
+                  usage with Connect (optional), and search inside messages (optional).
                 </dd>
               </div>
               <div>
