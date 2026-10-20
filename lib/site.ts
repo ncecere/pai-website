@@ -2,7 +2,7 @@ const repoUrl = "https://github.com/ncecere/pi-agent-interface";
 // The page describes the released version, so links into the repository are
 // pinned at its tag (blob/ for files, tree/ for folders). Move the tag when a
 // new release is checked against the page.
-const tag = "v0.5.0";
+const tag = "v0.5.1";
 const pinned = `${repoUrl}/blob/${tag}`;
 
 export const site = {
@@ -19,18 +19,18 @@ export const site = {
   docsUrl: "https://docs.pai.bitop.dev",
   repoUrl,
   // The latest release, and the release day of `version` (the footer and the
-  // sitemap show it): the v0.5.0 tag (commit df32023).
+  // sitemap show it): the v0.5.1 tag (commit b28fdc5).
   version: tag,
   releaseDate: "2026-10-19" as string | null,
   releaseNotesUrl: `${repoUrl}/releases/tag/${tag}`,
   // The container image the repository's image workflow publishes for each
   // release tag: multi-arch (linux/amd64, linux/arm64), public, signed with
-  // cosign keyless. The digest is the v0.5.0 multi-arch index (the
-  // digest of the v0.5.0 release; linux/amd64 and linux/arm64). The
-  // previous release, v0.4.0, was sha256:9c140c7c...0c399.
+  // cosign keyless. The digest is the v0.5.1 multi-arch index (the
+  // digest of the v0.5.1 release; linux/amd64 and linux/arm64). The
+  // previous release, v0.5.0, was sha256:0df3c305...668fa1.
   image: "ghcr.io/ncecere/pi-agent-interface",
   imageTag: tag,
-  imageDigest: "sha256:0df3c305657a9a8a38f6eca78329a7f12854a370bc640926e0fc4af94e668fa1",
+  imageDigest: "sha256:cb1720a0cdb6a9231bc7cdd99fe43c1ed031e257f4d6ec9367d388e96c35fd51",
   // The signing identity: the image workflow at the release tag, and GitHub's OIDC issuer.
   cosignIdentity: `${repoUrl}/.github/workflows/image.yml@refs/tags/${tag}`,
   cosignIssuer: "https://token.actions.githubusercontent.com",

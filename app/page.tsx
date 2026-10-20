@@ -18,10 +18,10 @@ import { ButtonLink, CheckList, CodeBlock, Eyebrow, Note, SectionHeading, Strong
 import { site } from "@/lib/site";
 
 /*
- * Every claim here is checked against Pi Agent Interface v0.5.0
- * (github.com/ncecere/pi-agent-interface, tag v0.5.0, commit df32023,
+ * Every claim here is checked against Pi Agent Interface v0.5.1
+ * (github.com/ncecere/pi-agent-interface, tag v0.5.1, commit b28fdc5,
  * 2026-10-19): README.md, ROADMAP.md, CHANGELOG.md ("0.2.0", "0.3.0",
- * "0.4.0", "0.5.0"), NOTICE.md, deploy/kubernetes/README.md, server/connect.ts,
+ * "0.4.0", "0.5.0", "0.5.1"), NOTICE.md, deploy/kubernetes/README.md, server/connect.ts,
  * server/connect-agents.ts, server/features.ts, the routes in server/app.ts,
  * server/config.ts, server/session.ts, server/agent-settings.ts, the screens
  * in src/routes/** and src/components/connect/, the Dockerfile and
@@ -864,8 +864,8 @@ function Deploy() {
 /* ------------------------------------------------------ Open source */
 
 // CHANGELOG 0.2.0 ("Connecting to the platform", "Usage"), server/app.ts (the usage lock in Connect mode),
-// ROADMAP.md at v0.5.0 ("Waiting on the Pi Durable platform", "Could be better, whenever the platform allows").
-// The roadmap is complete as of v0.5.0; the items are in its order.
+// ROADMAP.md at v0.5.1 ("Waiting on the Pi Durable platform", "Could be better, whenever the platform allows").
+// The roadmap is complete as of v0.5.1; the items are in its order.
 const notBuilt: ReactNode[] = [
   <>
     <Strong>Files and images in a message, steering a reply in progress, approving tool calls, and editing or
@@ -942,8 +942,10 @@ function OpenSource() {
                   and readable errors, when, which model and how many tokens under each reply when the platform records them, the admin area and settings, the optional usage features, the Face logo, sign-in limited, and administrators
                   set, by identity-provider group, rotating the session secret without anyone reconnecting, Prometheus
                   metrics with example alerts, a rehearsed database restore, browser and accessibility tests in CI, and
-                  a signed image with a Kubernetes base. New in this release: long conversation lists that stay fast,
-                  usage with Connect (optional), and search inside messages (optional).
+                  a signed image with a Kubernetes base. New in v0.5.0: long conversation lists that stay fast,
+                  usage with Connect (optional), and search inside messages (optional). This release fixes two things
+                  on phones: text fields no longer make the page zoom in, and the greeting&apos;s comma stays on the
+                  first line.
                 </dd>
               </div>
               <div>
